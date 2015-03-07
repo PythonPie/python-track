@@ -18,7 +18,9 @@ def parse_args(args = None):
 							If same parameter is present both in command line & XML , command line parameter will be given priority""")
 	parser.add_argument("-s", "--sheet" , help = "Worksheet where the data will be written. If not specified query name will be used for this")
 
-	parser.add_argument("-u", "--user", help="User name , required to login to CSCRM",required=True)	
+	parser.add_argument("-u", "--user", help="User name , required to login to CSCRM", required = True)
+	parser.add_argument("-p", "--password", help="CSCRM password , required to login to CSCRM")
+	parser.add_argument("-q", "--query", help="CSCRM query , required to access request data")	
 	args = args if args else sys.argv[1:]
 	args = parser.parse_args(args)
 	argsDictionary = args.__dict__
