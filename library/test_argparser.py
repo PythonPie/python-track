@@ -3,7 +3,7 @@ import unittest
 import sys
 from library import argparser as parse
 
-print ("Command line argumenrs are ", sys.argv)
+print ("Command line arguments are ", sys.argv)
 class TestSequenceFunctions(unittest.TestCase):
 
     @staticmethod
