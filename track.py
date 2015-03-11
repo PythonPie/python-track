@@ -6,15 +6,12 @@ try:
 	args = parse.parse_args()
 	OutputSheet = None
 	XmlData = {}
+	Command = args['command']
 	User = args['user']
 	Password = args['password']
 	Query = args['query']
 	Sheet = args['sheet']
 	SyncKey = args['sync_key']
-except BaseException as exception:
-	print(exception)
-	pass
-else:
 	XmlFile = args['xml']	
 	if XmlFile is not None and XmlFile[-4:] == '.xml':
 		XmlData = XmlReader.processXmlData(XmlFile)
@@ -28,14 +25,21 @@ else:
 			args['sheet'] = XmlData['file']
 		if SyncKey is None :
 			args['sync_key'] = XmlData['sync-key']
-	else :
-		print('Please provide the essential inputs either via command line or via valid xml file')
+	# sheet is an optional parameter, if not specified will create a default sheet.
+	if Sheet is None :
+		print("No Valid excel sheet is passed, the default output sheet will be created with query name.\n")
+		args['sheet'] = args['query']+'.xls'
+		Sheet = args['sheet']
+	for key,value in args.items():
+		if value is None and key is not 'xml':
+			raise IOError('Please provide the essential inputs either via command line or via valid xml file')
+except BaseException as exception:
+	# print('deadbeef')
+	print(exception)
+	pass
+else:
 	pass
 finally:
-	if Sheet is None or Sheet[-4:] != '.xls':
-		print("No Valid excel sheet is passed, the default output sheet will be created with user name.\n")
-		Sheet = args['user']+'.xls'
-		args['sheet'] = Sheet
 	OutputSheet = open(Sheet,'w')
 	myData = "I think I got the solution for the issue I was having\n"
 	OutputSheet.write(myData)
